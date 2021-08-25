@@ -11,9 +11,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 const upload = multer({ dest: 'images/' });
-const crypto = require('crypto');
-const hashSum = crypto.createHash('md5');
-
 
 app.put('/users/:id/photos',upload.single('image'),function (req, res, err) {
     let file_path = 'home/lilit/Instagram/'+req.file.path;
