@@ -15,12 +15,13 @@ const upload = multer({ dest: 'images/' });
 app.put('/users/:id/photos',upload.single('image'),function (req, res, err) {
     let file_path = 'home/lilit/Instagram/'+req.file.path;
     let id=req.params.id;
-    let ob={
-        id:id,
-        photo:file_path
-    }
-    let json = JSON.stringify(ob);
-    fs.writeFileSync('photos.json',json);
+    let ob={};
+    let elem=[];
+    ob.id=id;
+    ob.path=file_path;
+    elem.push(JSON.parse(fs.readFileSync('photos.json')));
+    elem.push(ob);
+    fs.writeFileSync('photos.json',JSON.stringify(elem));
     let extention = req.file.originalname.split('.').pop();
     if(extention!='jpg' && extention!='jpeg' && extention!='png'&& extention!='gif'){
         res.send("err");
