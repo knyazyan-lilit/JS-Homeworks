@@ -11,8 +11,19 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 const upload = multer({ dest: 'images/' });
+const crypto = require('crypto');
+const hashSum = crypto.createHash('md5');
 
-app.put('/users/photos',upload.single('image'),function (req, res,err) {
+
+app.put('/users/:id/photos',upload.single('image'),function (req, res, err) {
+    let file_path = 'home/lilit/Instagram/'+req.file.path;
+    let id=req.params.id;
+    let ob={
+        id:id,
+        photo:file_path
+    }
+    let json = JSON.stringify(ob);
+    fs.writeFileSync('photos.json',json);
     let extention = req.file.originalname.split('.').pop();
     if(extention!='jpg' && extention!='jpeg' && extention!='png'&& extention!='gif'){
         res.send("err");
