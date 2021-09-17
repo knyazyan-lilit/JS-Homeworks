@@ -20,7 +20,6 @@ const tweetSchema = new Schema({
     text: String
 })
 
-
 const User = mongoose.model('user', userSchema);
 const Tweet = mongoose.model('tweet', tweetSchema);
 
